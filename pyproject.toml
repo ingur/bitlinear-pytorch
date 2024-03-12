@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bitlinear-pytorch"
+version = "0.0.2"
+description = "Implementation of the BitLinear layer from: The Era of 1-bit LLMs: All Large Language Models are in 1.58 Bits"
+dependencies = [ "torch>=1.10.0" ]
+readme = "README.md"
+authors = [
+    {name = "Ingur Veken", email = "ingurv99@gmail.com"},
+    {name = "Niels Rouws", email = "nrouws@gmail.com"}
+]
+license = {file = "LICENSE"}
+keywords = ["pytorch", "quantization", "bitlinear", "linear", "layer", "ternary", "binary", "quantized", "quantized weights"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "License :: OSI Approved :: MIT License",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/ingur/bitlinear-pytorch"
+"Issues" = "https://github.com/ingur/bitlinear-pytorch/issues"
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-runner"]
+
+[tool.setuptools.packages.find]
+include = ["bitlinear"]
+exclude = ["tests", "examples"]
