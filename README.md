@@ -52,6 +52,6 @@ MIT
 ## TODO
 - [x] Implement base BitLinear layer
 - [x] Add example usage
-- [ ] Setup Github Actions workflow
+- [x] Setup Github Actions workflow
 - [ ] Implement memory efficient weight encoding/decoding
 - [ ] Implement Fast Inference (CUDA/CPU/VHDL)
