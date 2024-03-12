@@ -29,5 +29,5 @@ classifiers = [
 test = ["pytest", "pytest-runner"]
 
 [tool.setuptools.packages.find]
-include = ["bitlinear"]
+include = ["bitlinear_pytorch"]
 exclude = ["tests", "examples"]
