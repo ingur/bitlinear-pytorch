@@ -47,10 +47,11 @@ MIT
       archivePrefix={arXiv},
       primaryClass={cs.CL}
 }
-```
 
+```
 ## TODO
 - [x] Implement base BitLinear layer
 - [x] Add example usage
+- [ ] Setup Github Actions workflow
 - [ ] Implement memory efficient weight encoding/decoding
 - [ ] Implement Fast Inference (CUDA/CPU/VHDL)
