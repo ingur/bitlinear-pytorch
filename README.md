@@ -4,7 +4,7 @@ Implementation of the BitLinear layer from: [The Era of 1-bit LLMs: All Large La
 
 ## Install
 ```bash
-pip install bitlinear_pytorch
+pip install bitlinear-pytorch
 ```
 
 ## Usage
