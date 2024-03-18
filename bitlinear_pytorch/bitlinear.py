@@ -16,7 +16,7 @@ def replace_linear_with_bitlinear(model: nn.Module, b: int = 8) -> None:
             replace_linear_with_bitlinear(module)
 
 
-class BitLinear(nn.Module):
+class BitLinear(nn.Linear):
     """
     Implements a BitLinear layer as described in "The Era of 1-bit LLMs: All Large Language Models are in 1.58 Bits"
 
@@ -26,7 +26,7 @@ class BitLinear(nn.Module):
     """
 
     def __init__(self, in_features: int, out_features: int, b: int = 8) -> None:
-        super(BitLinear, self).__init__()
+        super().__init__(in_features, out_features, False)
 
         self.in_features = in_features
         self.out_features = out_features
@@ -35,17 +35,16 @@ class BitLinear(nn.Module):
 
         self.norm = nn.LayerNorm(in_features, elementwise_affine=False)
 
-        self.fweight = nn.Parameter(torch.Tensor(out_features, in_features))
-        self.bweight = torch.zeros_like(self.fweight)
+        self.bweight = torch.zeros_like(self.weight)
 
         self.reset_parameters()
 
     def reset_parameters(self) -> None:
-        nn.init.kaiming_uniform_(self.fweight, a=math.sqrt(5))
+        nn.init.kaiming_uniform_(self.weight, a=math.sqrt(5))
 
     def bin_weights(self) -> None:
-        gamma = self.fweight.abs().mean() + self.eps
-        w = torch.round(self.fweight / gamma)
+        gamma = self.weight.abs().mean() + self.eps
+        w = torch.round(self.weight / gamma)
         self.bweight = torch.clamp(w, min=-1, max=1)
 
     def absmax_quantization(self, x) -> tuple[torch.Tensor, torch.Tensor]:
@@ -54,12 +53,12 @@ class BitLinear(nn.Module):
         q = torch.clamp(q, min=-self.Qb + self.eps, max=self.Qb - self.eps).round()
         return q, gamma
 
-    def forward(self, x) -> torch.Tensor:
+    def forward(self, input) -> torch.Tensor:
         self.bin_weights()
-        x = self.norm(x)
+        x = self.norm(input)
         x_q, gamma = self.absmax_quantization(x)
-        x_q = F.linear(x_q, BitLinear.ste(self.bweight, self.fweight))
-        beta = torch.linalg.norm(self.fweight, ord=1)
+        x_q = F.linear(x_q, BitLinear.ste(self.bweight, self.weight))
+        beta = torch.linalg.norm(self.weight, ord=1)
         x = x_q * gamma * beta / self.Qb
         return x
 
