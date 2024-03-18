@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bitlinear-pytorch"
-version = "0.2.0"
+version = "0.3.0"
 description = "Implementation of the BitLinear layer from: The Era of 1-bit LLMs: All Large Language Models are in 1.58 Bits"
 dependencies = [ "torch>=1.10.0" ]
 readme = "README.md"
