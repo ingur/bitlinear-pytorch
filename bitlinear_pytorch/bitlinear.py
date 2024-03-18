@@ -49,7 +49,7 @@ class BitLinear(nn.Module):
         self.bweight = torch.clamp(w, min=-1, max=1)
 
     def absmax_quantization(self, x) -> tuple[torch.Tensor, torch.Tensor]:
-        gamma = x.abs().max()
+        gamma = x.abs().max() + self.eps
         q = x * self.Qb / gamma
         q = torch.clamp(q, min=-self.Qb + self.eps, max=self.Qb - self.eps).round()
         return q, gamma
