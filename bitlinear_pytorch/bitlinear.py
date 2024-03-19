@@ -27,9 +27,6 @@ class BitLinear(nn.Linear):
 
     def __init__(self, in_features: int, out_features: int, b: int = 8) -> None:
         super().__init__(in_features, out_features, False)
-
-        self.in_features = in_features
-        self.out_features = out_features
         self.Qb = 2 ** (b - 1) - 1
         self.eps = 1e-5
 
