@@ -27,13 +27,10 @@ class BitLinear(nn.Linear):
 
     def __init__(self, in_features: int, out_features: int, b: int = 8) -> None:
         super().__init__(in_features, out_features, False)
+        self.norm = nn.LayerNorm(in_features, elementwise_affine=False)
+        self.bweight = torch.zeros_like(self.weight)
         self.Qb = 2 ** (b - 1) - 1
         self.eps = 1e-5
-
-        self.norm = nn.LayerNorm(in_features, elementwise_affine=False)
-
-        self.bweight = torch.zeros_like(self.weight)
-
         self.reset_parameters()
 
     def reset_parameters(self) -> None:
