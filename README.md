@@ -9,7 +9,7 @@ pip install bitlinear-pytorch
 
 ## Usage
 ```python
-import torch import nn
+from torch import nn
 from bitlinear_pytorch import BitLinear, replace_linear_with_bitlinear
 
 class TinyMLP(nn.Module):
