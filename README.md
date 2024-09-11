@@ -10,28 +10,27 @@ pip install bitlinear-pytorch
 ## Usage
 ```python
 from torch import nn
-from bitlinear_pytorch import BitLinear, replace_linear_with_bitlinear
+from bitlinear_pytorch import BitLinear
 
 class TinyMLP(nn.Module):
     def __init__(self):
         super(TinyMLP, self).__init__()
 
         self.layers = nn.Sequential(
-            nn.Linear(784, 256),
+            nn.LayerNorm(784),
+            BitLinear(784, 256),
             nn.ReLU(),
-            nn.Linear(256, 128),
+            nn.LayerNorm(256),
+            BitLinear(256, 128),
             nn.ReLU(),
-            nn.Linear(128, 10),
+            nn.LayerNorm(128),
+            BitLinear(128, 10),
         )
 
     def forward(self, x):
         return self.layers(x)
 
 model = TinyMLP()
-replace_linear_with_bitlinear(model)
-
-# or use BitLinear directly
-bitlinear = BitLinear(784, 256)
 ```
 
 ## License
