@@ -19,10 +19,10 @@ class TinyMLP(nn.Module):
         self.layers = nn.Sequential(
             nn.LayerNorm(784),
             BitLinear(784, 256),
-            nn.ReLU(),
+            nn.GELU(),
             nn.LayerNorm(256),
             BitLinear(256, 128),
-            nn.ReLU(),
+            nn.GELU(),
             nn.LayerNorm(128),
             BitLinear(128, 10),
         )
